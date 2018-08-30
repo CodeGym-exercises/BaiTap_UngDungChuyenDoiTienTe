@@ -9,54 +9,37 @@
         clear: both;
     }
 
-    button {
-        margin-top: 15px;
-        margin-left: 10px;
-        background-color: #8f82cf;
-        border: 1px solid #fff;
-        border-radius: 3px;
-        width: 80px;
-        height: 30px;
-        color: #fff;
-        transition: 0.2s;
-    }
-
-    button:hover {
-        background-color: #fff;
-        border: 1px solid #8f82cf;
-        color: #8f82cf;
-        cursor: pointer;
-    }
-
     select {
         width: 70%;
         height: 26px
     }
-	
-	.tacgia{
-		background-color:#8f82cf; 
-		border-top-right-radius:10px;
-		border: 1px solid #8f82cf;
-		height: 39px;
-		left: -1px;
-		position: absolute;
-		padding-top:2px;
-		padding-left: 2px;
-		top:-42px;
-		width:50%;
-	}
-	.tacgia a{
-		text-decoration: none;
-		color:#fff;
-	}
+
+    .tacgia {
+        background-color: #8f82cf;
+        border-top-right-radius: 10px;
+        border: 1px solid #8f82cf;
+        height: 39px;
+        left: -1px;
+        position: absolute;
+        padding-top: 2px;
+        padding-left: 2px;
+        top: -42px;
+        width: 50%;
+    }
+
+    .tacgia a {
+        text-decoration: none;
+        color: #fff;
+    }
+
     .container_form {
         width: 40%;
         height: 120px;
         margin: 200px auto;
         border: 1px solid #8f82cf;
         position: relative;
-        padding-top:2px;
-		padding-left: 2px;
+        padding-top: 2px;
+        padding-left: 2px;
     }
 
     .container_form .box {
@@ -74,16 +57,34 @@
         width: 70%;
         height: 20px;
     }
+    .container_form .box input[type="button"] {
+        margin-top: 15px;
+        margin-left: 10px;
+        background-color: #8f82cf;
+        border: 1px solid #fff;
+        border-radius: 3px;
+        width: 80px;
+        height: 30px;
+        color: #fff;
+        transition: 0.2s;
+    }
+
+    .container_form .box input[type="button"]:hover {
+        background-color: #fff;
+        border: 1px solid #8f82cf;
+        color: #8f82cf;
+        cursor: pointer;
+    }
     </style>
 </head>
 
 <body>
     <form action="#" class="container_form">
-    	<div class="tacgia">
-    		<strong style="color: #fff">LuuTien</strong></br>
-    		<a href ="https://github.com/CodeGym-exercises/
-    		BaiTap_UngDungChuyenDoiTienTe.git">C0818G01-luutien18195@gmail.com</a>
-    	</div>
+        <div class="tacgia">
+            <strong style="color: #fff">LuuTien</strong></br>
+            <a href="https://github.com/CodeGym-exercises/
+            BaiTap_UngDungChuyenDoiTienTe.git">C0818G01-luutien18195@gmail.com</a>
+        </div>
         <div class="box">
             <b>Amount</b>
             <input type="text" id="input">
@@ -91,20 +92,20 @@
         <div class="box">
             <b>From Currency</b>
             <select id="select_from">
-                <option value="vnd">VND</option>
-                <option value="usd">USD</option>
+                <option value="23000">VND</option>
+                <option value="1">USD</option>
             </select>
         </div>
         <div class="box">
             <b>To Currency</b>
             <select id="select_to">
-                <option value="usd">USD</option>
-                <option value="vnd">VND</option>
+                <option value="1">USD</option>
+                <option value="23000">VND</option>
             </select>
         </div>
         <div class="clear"></div>
         <div class="box">
-            <button id="convert" onclick="ChuyenTien();">Convert</button>
+            <input type="button" id="convert" name="Convert" value="Convert">
         </div>
         <div class="box">
             <b style="line-height: 60px;">Result: </b>
@@ -114,23 +115,34 @@
         </div>
     </form>
     <script type="text/javascript">
-    function ChuyenTien() {
+    let cv = document.getElementById("convert");
+    let result = document.getElementById("result");
+    cv.onclick = function() {
+        //input number
         let input = parseFloat(document.getElementById("input").value);
-        let select_from = document.getElementById("select_from").value;
-        let select_to = document.getElementById("select_to").value;
-        let result = document.getElementById("result");
-        let vnd = input * 23000,
-            usd = input / 23000;
-        console.log("input is " + select_from);
-        console.log("output is " + select_to);
-        if (select_from === select_to) {
-            result.innerHTML = input + " " + select_from + " = " + input + " " + select_to;
-        } else if (select_from === "vnd" && select_to === "usd") {
-            result.innerHTML = input + " " + select_from + " = " + usd + " " + select_to;
-        } else if (select_from === "usd" && select_to === "vnd") {
-            result.innerHTML = input + " " + select_from + " = " + vnd + " " + select_to;
-        }
+
+        //from currency
+        let selected_from = document.getElementById("select_from");
+        let selected_from_value = parseFloat(selected_from.options[selected_from.selectedIndex].value);
+        let selected_from_text = selected_from.options[selected_from.selectedIndex].text;
+
+        //to currency
+        let selected_to = document.getElementById("select_to");
+        let selected_to_value = parseFloat(selected_to.options[selected_to.selectedIndex].value);
+        let selected_to_text = selected_to.options[selected_from.selectedIndex].text;
+
+        //convert currency
+        let convert = (input * selected_to_value) / selected_from_value;
+
+        //test by console.log
+        console.log("input is " + selected_from_text);
+        console.log("output is " + selected_to_text);
+        
+        //show result
+
+        result.innerHTML = input + " " + selected_from_text + " = " + convert + " " + selected_to_text ;
     }
     </script>
 </body>
+
 </html>
